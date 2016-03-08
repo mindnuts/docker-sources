@@ -1,0 +1,14 @@
+FROM gliderlabs/alpine:edge
+
+RUN apk add --update \
+    bash \
+    && rm -rf /var/cache/apk/*
+
+RUN mkdir -p /opt/influxdb
+VOLUME ["/opt/influxdb"]
+
+ADD influxd /usr/bin/influxd
+ADD influx_tsm /usr/bin/influx_tsm
+ADD config.toml /etc/influxdb/config.toml
+
+EXPOSE 8083 8086 8090 8099
